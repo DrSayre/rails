@@ -82,6 +82,7 @@ module ActionMailer
     #   Notifier.welcome(User.first).deliver_now
     #
     def deliver_now
+      print "\n***********\n#{@mailer.name}\n#{@mail_method.to_s}#{delivery_method.to_s}\n***********\n"
       message.deliver
     end
 
@@ -109,6 +110,7 @@ module ActionMailer
 
       def enqueue_delivery(delivery_method, options={})
         args = @mailer.name, @mail_method.to_s, delivery_method.to_s, *@args
+        print "\n************\n#{args.inspect}\n************\n"
         ActionMailer::DeliveryJob.set(options).perform_later(*args)
       end
   end
